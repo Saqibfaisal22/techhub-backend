@@ -98,10 +98,10 @@ const startServer = async () => {
     logger.info("Database connection established successfully.")
 
     // Sync database (in production, use migrations instead)
-    if (process.env.NODE_ENV !== "production") {
-      await sequelize.sync()
-      logger.info("Database synchronized.")
-    }
+    // if (process.env.NODE_ENV !== "production") {
+    //   await sequelize.sync()
+    //   logger.info("Database synchronized.")
+    // }
 
     app.listen(PORT, () => {
       logger.info(`Server running on port ${PORT}`)

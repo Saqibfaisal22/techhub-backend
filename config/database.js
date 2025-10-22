@@ -1,29 +1,14 @@
-require("dotenv").config()
+require("dotenv").config();
 
 module.exports = {
   development: {
-    username: "root",
-    password: "",
-    database: "techhub_ecommerce",
-    // host: process.env.DB_HOST || "localhost",
-    // port: process.env.DB_PORT || 3306,
-    dialect: "mysql",
-    logging: console.log,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-  },
-  test: {
     username: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME + "_test" || "techhub_ecommerce_test",
+    database: process.env.DB_NAME || "techhub_ecommerce",
     host: process.env.DB_HOST || "localhost",
     port: process.env.DB_PORT || 3306,
     dialect: "mysql",
-    logging: false,
+    logging: console.log,
   },
   production: {
     username: process.env.DB_USER,
@@ -33,11 +18,5 @@ module.exports = {
     port: process.env.DB_PORT || 3306,
     dialect: "mysql",
     logging: false,
-    pool: {
-      max: 10,
-      min: 2,
-      acquire: 30000,
-      idle: 10000,
-    },
   },
-}
+};
