@@ -1,0 +1,53 @@
+// TEMPORARY VERSION - FOR TESTING ONLY
+// This allows any authenticated user to upload/delete media
+// Use this ONLY for testing, then switch back to admin-only
+
+const express = require('express');
+const router = express.Router();
+const mediaController = require('../controllers/mediaController');
+const { authenticate, authorize } = require('../middleware/auth');
+
+// @route   POST /api/media/upload
+// @desc    Upload single image
+// @access  Private (All authenticated users) - TESTING ONLY!
+router.post(
+  '/upload',
+  authenticate,
+  // authorize('admin'),  // REMOVED FOR TESTING
+  mediaController.uploadSingle,
+  mediaController.handleSingleUpload
+);
+
+// @route   POST /api/media/upload-multiple
+// @desc    Upload multiple images
+// @access  Private (All authenticated users) - TESTING ONLY!
+router.post(
+  '/upload-multiple',
+  authenticate,
+  // authorize('admin'),  // REMOVED FOR TESTING
+  mediaController.uploadMultiple,
+  mediaController.handleMultipleUpload
+);
+
+// @route   GET /api/media
+// @desc    Get all media files
+// @access  Private (All authenticated users)
+router.get('/', authenticate, mediaController.getAllMedia);
+
+// @route   GET /api/media/:filename
+// @desc    Get media file details
+// @access  Private (All authenticated users)
+router.get('/:filename', authenticate, mediaController.getMediaDetails);
+
+// @route   DELETE /api/media/:filename
+// @desc    Delete media file
+// @access  Private (All authenticated users) - TESTING ONLY!
+router.delete('/:filename', authenticate, mediaController.deleteMedia);
+// If you want delete to remain admin-only, use:
+// router.delete('/:filename', authenticate, authorize('admin'), mediaController.deleteMedia);
+
+module.exports = router;
+
+// IMPORTANT: After testing works, revert to admin-only version:
+// 1. Copy the original media.js.backup
+// 2. Or add back: authorize('admin') to upload and delete routes
